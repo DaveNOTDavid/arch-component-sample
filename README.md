@@ -1,5 +1,6 @@
 # Android Architecture Component Sample Project
 Technologies used so far:
+- TODO: Jetpack Compose
 - MVVM (with `LiveData` and `ViewModel`)
 - View Binding
 - Navigation arch component, notably with Fragments
