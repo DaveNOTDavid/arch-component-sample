@@ -1,11 +1,11 @@
 package com.davenotdavid.archcomponentsample.app
 
 import android.app.Application
-import com.davenotdavid.archcomponentsample.dagger.DaggerAppComponent
+import dagger.hilt.android.HiltAndroidApp
 
-class MyApplication : Application() {
-
-    // Reference to the application graph that is used across the whole app
-    val appComponent = DaggerAppComponent.create()
-
-}
+/**
+ * An application with @HiltAndroidApp that triggers Hilt's code generation and
+ * adds an application-level dependency container.
+ */
+@HiltAndroidApp
+class MyApplication : Application()

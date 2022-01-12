@@ -1,5 +1,7 @@
 package com.davenotdavid.archcomponentsample.model
 
+import com.davenotdavid.archcomponentsample.db.model.DbHeadline
+
 /**
  * Example response:
 {
@@ -25,11 +27,22 @@ package com.davenotdavid.archcomponentsample.model
     ]
 }
  */
-data class HeadlineResponse(
+data class Headline(
+    var id: String,
     val status: String,
     val totalResults: Int,
     val articles: List<Article>
-)
+) {
+
+    fun toDbHeadline(): DbHeadline =
+        DbHeadline(
+            id,
+            status,
+            totalResults,
+            articles
+        )
+
+}
 
 data class Source(
     val id: String?,
@@ -37,13 +50,14 @@ data class Source(
 )
 
 data class Article(
+    var id: String,
     val source: Source,
     val author: String,
     val title: String,
     val description: String,
     val url: String,
     val urlToImage: String,
-    // UTC timestamp
+    // UTC timestamp (e.g. 2021-12-26T16:40:20Z)
     val publishedAt: String,
     val content: String
 )

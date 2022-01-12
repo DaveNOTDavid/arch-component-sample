@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="article"
+            type="com.davenotdavid.archcomponentsample.model.Article"
+            />
+
+        <variable
+            name="viewmodel"
+            type="com.davenotdavid.archcomponentsample.ui.articles.ArticlesViewModel"
+            />
+
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:onClick="@{() -> viewmodel.openArticleWebView(article.url)}"
+        android:foreground="?attr/selectableItemBackground"
+        tools:ignore="UnusedAttribute"
+        >
+
+        <TextView
+            android:id="@+id/article_title_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@android:color/black"
+            android:text="@{article.title}"
+            tools:text="Article Title"
+            />
+
+        <TextView
+            android:id="@+id/article_published_ago_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@android:color/darker_gray"
+            android:text="@{article.publishedAt}"
+            tools:text="22 minutes ago"
+            />
+
+    </LinearLayout>
+
+</layout>

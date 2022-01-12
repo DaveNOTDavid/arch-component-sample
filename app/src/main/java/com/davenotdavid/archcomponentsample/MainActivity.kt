@@ -1,28 +1,29 @@
 package com.davenotdavid.archcomponentsample
 
 import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.davenotdavid.archcomponentsample.app.MyApplication
 import com.davenotdavid.archcomponentsample.databinding.ActivityMainBinding
-import com.davenotdavid.archcomponentsample.ui.home.di.HomeComponent
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Marks an Android component class to be setup for injection with the standard
+ * Hilt Dagger Android components.
+ */
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    // Reference to the Home graph
-    lateinit var homeComponent: HomeComponent
-
+    private lateinit var navController: NavController
+    private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Creation of the home graph using the application graph
-        homeComponent = (applicationContext as MyApplication).appComponent.homeComponent().create()
-        // Make Dagger instantiate @Inject fields in this activity
-        homeComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -30,15 +31,19 @@ class MainActivity : AppCompatActivity() {
 
         val navView: BottomNavigationView = binding.navView
 
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(
+        appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications
+                R.id.navigation_articles, R.id.navigation_dashboard, R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }
