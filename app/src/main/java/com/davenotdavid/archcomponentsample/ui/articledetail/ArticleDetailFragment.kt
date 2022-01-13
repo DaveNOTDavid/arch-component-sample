@@ -5,35 +5,40 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.viewinterop.AndroidView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import com.davenotdavid.archcomponentsample.databinding.FragmentArticleDetailBinding
 
+/**
+ * TODO: Somewhat of a more hybrid approach for now, but renders a Composable function!
+ */
 class ArticleDetailFragment : Fragment() {
 
-    private lateinit var articleDetailBinding: FragmentArticleDetailBinding
     private val articleDetailArgs: ArticleDetailFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        articleDetailBinding = FragmentArticleDetailBinding.inflate(inflater, container, false)
-        return articleDetailBinding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setupArticleWebView()
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    private fun setupArticleWebView() {
-        articleDetailBinding.articlePageWebView.apply {
-            settings.javaScriptEnabled = true
-            loadUrl(articleDetailArgs.articleUrl)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        return ComposeView(requireContext()).apply {
+            setContent {
+                ArticleWebView(articleDetailArgs.articleUrl)
+            }
         }
     }
 
+}
+
+@Composable
+@SuppressLint("SetJavaScriptEnabled")
+private fun ArticleWebView(url: String) {
+    AndroidView(factory = {
+        WebView(it).apply {
+            settings.javaScriptEnabled = true
+
+            loadUrl(url)
+        }
+    })
 }

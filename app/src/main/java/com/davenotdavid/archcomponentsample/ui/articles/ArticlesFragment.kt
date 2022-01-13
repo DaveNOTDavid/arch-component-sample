@@ -57,6 +57,9 @@ class ArticlesFragment : Fragment() {
         })
     }
 
+    /**
+     * TODO: Alternative to using Nav component not needing an XML layout? Or, hybrid approach for now?
+     */
     private fun goToArticleWebScreen(url: String) {
         val action = ArticlesFragmentDirections.actionArticlesFragmentToArticleDetailFragment(url)
         findNavController().navigate(action)

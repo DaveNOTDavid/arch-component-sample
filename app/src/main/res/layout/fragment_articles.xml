@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
-    <!-- TODO: With ViewModel, handle other states like loading, list in RV, and etc. -->
     <data>
 
         <variable
